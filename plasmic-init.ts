@@ -1,5 +1,9 @@
 import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
 
+import  PricingCodeComponent  from "./components/pricingComponent";
+import TestimonialCarousel from "./components/testimonialCarousel";
+import NavbarComponent from "./components/navbarComponent";
+
 export const PLASMIC = initPlasmicLoader({
   projects: [
     {
@@ -12,8 +16,37 @@ export const PLASMIC = initPlasmicLoader({
   // For development, you can set preview to true, which will use the unpublished
   // project, allowing you to see your designs without publishing.  Please
   // only use this for development, as this is significantly slower.
-  preview: false,
+  preview: true,
 });
+
+PLASMIC.registerComponent(PricingCodeComponent, {
+  name: 'Pricing Code Component',
+  props: {
+    verbose: 'boolean',
+    children: 'slot'
+  }
+});
+
+PLASMIC.registerComponent(TestimonialCarousel, {
+  name: 'Testimonial Carousel',
+  props: {
+    verbose: 'boolean',
+    children: 'slot'
+  }
+});
+
+PLASMIC.registerComponent(NavbarComponent, {
+  name: 'Navbar Component',
+  props: {
+    verbose: 'boolean',
+    children: 'slot'
+  }
+});
+
+
+
+
+
 
 // You can register any code components that you want to use here; see
 // https://docs.plasmic.app/learn/code-components-ref/
