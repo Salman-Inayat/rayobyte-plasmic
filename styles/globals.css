@@ -303,7 +303,8 @@ label {
   }
 
   .section-container {
-    max-width: 90%;
+    margin-top: 3rem;
+    max-width: 95%;
   }
 }
 
@@ -691,11 +692,43 @@ label {
 }
 
 @media screen and (max-width: 599.99px) {
+  .pricing-header {
+    padding: 54px 0px 61px;
+  }
+
+  .section-container {
+    margin-top: 3rem;
+    max-width: 95%;
+  }
+
+  .section-header-desc {
+    margin-bottom: 3rem;
+  }
+
+  .two-cols {
+    grid-template-columns: 0.8fr;
+    gap: 0;
+  }
+
+  .left-col {
+    margin-bottom: 3rem;
+  }
+
+  .pricing-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* gap: 50px; */
+  }
+
+  .proxy_side {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 20px;
+    gap: 16px;
+  }
+
   .chart-wrapper {
-    position: unset;
-    width: 100%;
-    max-width: 600px;
-    height: auto;
+    max-width: 300px;
   }
 
   .apex-chart {
@@ -714,6 +747,10 @@ label {
 
   .chart-wrapper .chart-content .sub-content {
     margin-bottom: 4px;
+  }
+
+  .price-slider-main {
+    width: 100%;
   }
 }
 
@@ -851,6 +888,56 @@ ul.button__bar {
   margin: auto;
 }
 
+@media only screen and (max-width: 600px) {
+  .testimonial-carousel-container {
+    width: 100%;
+    height: 100%;
+    padding: 2rem 1rem;
+  }
+
+  .testimonial-carousel-sub-container {
+    gap: 1rem;
+  }
+
+  .testimonial-carousel-sub-container h2 {
+    text-align: center;
+    font-size: 30px;
+    color: #000;
+  }
+
+  .testimonial-card {
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    width: 80% !important;
+  }
+
+  .slick-list {
+    width: 320px !important;
+    margin: auto !important;
+  }
+
+  .slick-slide div {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+  }
+
+  .testimonial-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .testominal-content {
+    flex-direction: column;
+  }
+
+  ul.button__bar {
+    margin-top: 2rem;
+  }
+}
+
 /**
   Navbar section styling
 */
@@ -945,3 +1032,8 @@ ul.button__bar {
   top: 0;
   transform: rotate(135deg);
 }
+
+/* 
+Media query for mobile screen
+
+*/

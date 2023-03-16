@@ -1,20 +1,3 @@
-// import * as React from 'react';
-
-// export interface HelloWorldProps {
-//   children?: React.ReactNode;
-//   className?: string;
-//   verbose?: boolean;
-// }
-
-// export function HelloWorld({ children, className, verbose }: HelloWorldProps) {
-//   return (
-//     <div className={className} style={{ padding: '20px' }}>
-//       <p>Hello there! this is updated {verbose && 'Really nice to meet you!'}</p>
-//       <div>{children}</div>
-//     </div>
-//   );
-// }
-
 import { useRouter } from "next/router";
 import DefaultErrorPage from "next/error";
 import Head from "next/head";
@@ -24,6 +7,8 @@ import "react-dropdown/style.css";
 import ReactFlagsSelect from "react-flags-select";
 import { Slider, Input, InputGroup } from "rsuite";
 import "rsuite/dist/rsuite.min.css";
+
+import { useMediaQuery } from "react-responsive";
 
 // import ReactApexChart from 'react-apexcharts';
 import dynamic from "next/dynamic";
@@ -142,6 +127,9 @@ const PricingComponent = ({
   className,
   verbose,
 }: HelloWorldProps) => {
+  const isDesktop = useMediaQuery({ minWidth: 992 });
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
   const [selectedTab, setSelectedTab] = useState(pricingTabs.DataCenterProxies);
   const [resedentialProxyCalculated, setresedentialProxyCalculated] = useState<
     any | 0
@@ -471,7 +459,7 @@ const PricingComponent = ({
                     <label>Length of Subscription:</label>
                   </div>
                   <div className="price-slider">
-                    {/* <Slider
+                    <Slider
                       className="price-slider-main"
                       defaultValue={10}
                       min={10}
@@ -481,38 +469,9 @@ const PricingComponent = ({
                       graduated
                       progress
                       tooltip={false}
-                      onChange={(e) => setDspMonths(LENGTHOFSUBSCRIPTION[e])}
-                      renderMark={(mark) => {
-                        if ([10, 20, 30, 40].includes(mark)) {
-                          return (
-                            <div>
-                              <span className="duration">
-                                {rangePoints[mark]}
-                                <br />{" "}
-                                {rangePoints[mark] === 1 ? "MONTH" : "MONTHS"}
-                              </span>
-                              {mark !== 10 && (
-                                <span className="discount">
-                                  {DISCOUNTS[mark]} %
-                                </span>
-                              )}
-                            </div>
-                          );
-                        }
-                        return null;
+                      onChange={(e) => {
+                        setDspMonths(LENGTHOFSUBSCRIPTION[e]);
                       }}
-                    /> */}
-                    <Slider
-                      // className="price-slider-main"
-                      defaultValue={10}
-                      min={10}
-                      step={10}
-                      max={50}
-                      value={SHOWSUBSCRIPTION[dspMonths]}
-                      graduated
-                      progress
-                      tooltip={true}
-                      onChange={(e) => setDspMonths(LENGTHOFSUBSCRIPTION[e])}
                       renderMark={(mark) => {
                         if ([10, 20, 30, 40].includes(mark)) {
                           return (
@@ -847,7 +806,7 @@ const PricingComponent = ({
                   </div>
                   <ReactApexChart
                     className="apex-chart"
-                    width={"500"}
+                    width={isMobile ? "300" : "500"}
                     options={chartOptions}
                     series={[
                       selectedTab == pricingTabs.ResidentialProxies
@@ -858,7 +817,6 @@ const PricingComponent = ({
                     ]}
                     type="radialBar"
                   />
-                  1
                 </div>
               )}
               <a

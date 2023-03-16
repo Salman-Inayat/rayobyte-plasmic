@@ -2,7 +2,6 @@ import { initPlasmicLoader } from "@plasmicapp/loader-nextjs";
 
 import  PricingCodeComponent  from "./components/pricingComponent";
 import TestimonialCarousel from "./components/testimonialCarousel";
-import NavbarComponent from "./components/navbarComponent";
 
 export const PLASMIC = initPlasmicLoader({
   projects: [
@@ -34,19 +33,6 @@ PLASMIC.registerComponent(TestimonialCarousel, {
     children: 'slot'
   }
 });
-
-PLASMIC.registerComponent(NavbarComponent, {
-  name: 'Navbar Component',
-  props: {
-    verbose: 'boolean',
-    children: 'slot'
-  }
-});
-
-
-
-
-
 
 // You can register any code components that you want to use here; see
 // https://docs.plasmic.app/learn/code-components-ref/
