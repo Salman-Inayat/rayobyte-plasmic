@@ -255,9 +255,10 @@ label {
   font-family: "Roboto", sans-serif;
   color: #fff;
   font-weight: 800;
-  font-size: 40px;
+  font-size: 42px;
   margin-top: 0;
   text-align: center;
+  letter-spacing: 1px;
 }
 
 .section-header-desc {
@@ -287,7 +288,7 @@ label {
 
 .pricing-row {
   display: grid;
-  grid-template-columns: 1.7fr 1fr;
+  grid-template-columns: 1.6fr 1fr;
   /* gap: 50px; */
 }
 
@@ -625,6 +626,7 @@ label {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 50%;
 }
 
 .chart-wrapper .chart-content * {
@@ -667,7 +669,7 @@ label {
   font-family: "Inter", sans-serif;
 }
 
-.chart-wrapper .chart-content .sub-content {
+/* .chart-wrapper .chart-content .sub-content {
   display: grid;
   grid-template-columns: 1fr 2px 1fr;
   gap: 24px;
@@ -679,6 +681,40 @@ label {
   height: 52px;
   background-color: #fff;
   margin-top: 5px;
+} */
+
+.chart-wrapper .chart-content .chart-sub-content {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-bottom: 14px;
+}
+
+.chart-wrapper .chart-content .chart-sub-content::before {
+  content: "";
+  align-self: stretch;
+  border: 1px solid lightgrey;
+}
+
+.chart-wrapper .chart-content .chart-sub-content .col-1 {
+  flex: 1;
+  order: -1;
+}
+
+.chart-wrapper .chart-content .chart-sub-content .col-2 {
+  flex: 1;
+}
+
+.chart-wrapper .chart-content .chart-sub-content .col-2 .radio-label {
+  text-transform: capitalize;
+  font-size: 14px;
+}
+
+.chart-wrapper .chart-content .country-name {
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 20px;
+  margin-top: 1rem;
 }
 
 @media screen and (max-width: 991.99px) {
@@ -728,7 +764,7 @@ label {
   }
 
   .chart-wrapper {
-    max-width: 300px;
+    max-width: 100%;
   }
 
   .apex-chart {
