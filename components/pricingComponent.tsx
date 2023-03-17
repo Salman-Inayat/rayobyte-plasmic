@@ -185,7 +185,7 @@ const PricingComponent = ({
       .radio[0]
   );
 
-  const [dspMonths, setDspMonths] = useState<any | "">("oneMonthDisc");
+  const [dspMonths, setDspMonths] = useState<any | "">("threeMonthDisc");
 
   const [dspValue, setDspValue] = useState(5);
   const [dspPackage, setDspPackage] = useState<any | "">("starterDisc");
@@ -532,19 +532,19 @@ const PricingComponent = ({
                     <div className="stats">
                       <span className="stat-item">
                         <b>Starter:</b> <i>5 to 99</i>{" "}
+                        {/* <span className="discount-value">-15%</span> */}
+                      </span>
+                      <span className="stat-item">
+                        <b>Personal:</b> <i>100 to 999</i>{" "}
                         <span className="discount-value">-15%</span>
                       </span>
                       <span className="stat-item">
-                        <b>Personal:</b> <i>5 to 99</i>{" "}
-                        <span className="discount-value">-15%</span>
+                        <b>Corporate:</b> <i>1k to 4,999</i>{" "}
+                        <span className="discount-value">-25%</span>
                       </span>
                       <span className="stat-item">
-                        <b>Corporate:</b> <i>5 to 99</i>{" "}
-                        <span className="discount-value">-15%</span>
-                      </span>
-                      <span className="stat-item">
-                        <b>Enterprise:</b> <i>5 to 99</i>{" "}
-                        <span className="discount-value">-15%</span>
+                        <b>Enterprise:</b> <i>5k+</i>{" "}
+                        <span className="discount-value">-30%</span>
                       </span>
                     </div>
                   </div>
@@ -672,8 +672,8 @@ const PricingComponent = ({
                     <Slider
                       defaultValue={10}
                       min={10}
-                      step={20}
-                      max={60}
+                      step={10}
+                      max={40}
                       value={SHOWSUBSCRIPTION[ispProxyInput.length]}
                       onChange={(e) =>
                         setIspProxyInput({
@@ -683,9 +683,10 @@ const PricingComponent = ({
                       }
                       graduated
                       progress
-                      tooltip={false}
+                      // tooltip={false}
                       renderMark={(mark) => {
                         if ([10, 20, 30, 40].includes(mark)) {
+                          console.log({ mark });
                           return (
                             <div>
                               <span className="duration">
