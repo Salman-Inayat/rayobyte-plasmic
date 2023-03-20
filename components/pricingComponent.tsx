@@ -5,10 +5,13 @@ import React, { useEffect, useState } from "react";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import ReactFlagsSelect from "react-flags-select";
-import { Slider, Input, InputGroup } from "rsuite";
+// import { Slider, Input, InputGroup } from "rsuite";
 import "rsuite/dist/rsuite.min.css";
 
 import { useMediaQuery } from "react-responsive";
+
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 
 // import ReactApexChart from 'react-apexcharts';
 import dynamic from "next/dynamic";
@@ -32,15 +35,6 @@ export interface HelloWorldProps {
   className?: string;
   verbose?: boolean;
 }
-
-// export function HelloWorld({ children, className, verbose }: HelloWorldProps) {
-//   return (
-//     <div className={className} style={{ padding: '20px' }}>
-//       <p>Hello there! this is updated {verbose && 'Really nice to meet you!'}</p>
-//       <div>{children}</div>
-//     </div>
-//   );
-// }
 
 const rangePoints = {
   10: 1,
@@ -124,6 +118,27 @@ let chartOptions: any = {
     // width: "30",
   },
   labels: ["Progress"],
+};
+
+const renderDCPSliderMarks = () => {
+  const marks = {};
+
+  for (const [value, months] of Object.entries(rangePoints)) {
+    const discount = DISCOUNTS[value];
+    marks[value] = {
+      label: (
+        <div className="mark-label">
+          <div className="duration">
+            <p>{months}</p>
+            <p>{months === 1 ? "MONTH" : "MONTHS"}</p>
+          </div>
+          {value !== "10" && <span className="discount">{discount} %</span>}
+        </div>
+      ),
+    };
+  }
+
+  return marks;
 };
 
 const PricingComponent = ({
@@ -475,22 +490,22 @@ const PricingComponent = ({
                     <label>Length of Subscription:</label>
                   </div>
                   <div className="price-slider">
-                    <Slider
+                    {/* <Slider
                       className="price-slider-main"
                       min={10}
                       step={10}
-                      max={50}
+                      max={40}
                       value={SHOWSUBSCRIPTION[dspMonths]}
                       graduated
                       progress
-                      tooltip={false}
+                      // tooltip={false}
                       onChange={(e) => {
                         setDspMonths(LENGTHOFSUBSCRIPTION[e]);
                       }}
                       renderMark={(mark) => {
                         if ([10, 20, 30, 40].includes(mark)) {
                           return (
-                            <div>
+                            <>
                               <span className="duration">
                                 {rangePoints[mark]}
                                 <br />{" "}
@@ -501,10 +516,55 @@ const PricingComponent = ({
                                   {DISCOUNTS[mark]} %
                                 </span>
                               )}
-                            </div>
+                            </>
+                            // <div>
+                            //   <span className="duration">
+                            //     {rangePoints[mark]}
+                            //     <br />{" "}
+                            //     {rangePoints[mark] === 1 ? "MONTH" : "MONTHS"}
+                            //   </span>
+                            //   {mark !== 10 && (
+                            //     <span className="discount">
+                            //       {DISCOUNTS[mark]} %
+                            //     </span>
+                            //   )}
+                            // </div>
                           );
                         }
                         return null;
+                      }}
+                    /> */}
+
+                    <Slider
+                      min={10}
+                      max={40}
+                      step={10}
+                      onChange={(e) => {
+                        setDspMonths(LENGTHOFSUBSCRIPTION[e]);
+                      }}
+                      value={SHOWSUBSCRIPTION[dspMonths]}
+                      marks={renderDCPSliderMarks()}
+                      activeDotStyle={{
+                        borderColor: "#fff",
+                        backgroundColor: "#07b6bf",
+                      }}
+                      trackStyle={{
+                        backgroundColor: "#07b6bf",
+                        height: 6,
+                      }}
+                      railStyle={{
+                        height: 6,
+                      }}
+                      dotStyle={{
+                        height: 4,
+                        width: 4,
+                        bottom: "-2px",
+                        display: "none",
+                      }}
+                      handleStyle={{
+                        borderColor: "#07b6bf",
+                        backgroundColor: "#07b6bf",
+                        opacity: 1,
                       }}
                     />
                   </div>
@@ -669,7 +729,7 @@ const PricingComponent = ({
                     <label>Length of Subscription:</label>
                   </div>
                   <div className="price-slider">
-                    <Slider
+                    {/* <Slider
                       defaultValue={10}
                       min={10}
                       step={10}
@@ -703,6 +763,41 @@ const PricingComponent = ({
                           );
                         }
                         return null;
+                      }}
+                    /> */}
+                    <Slider
+                      min={10}
+                      max={40}
+                      step={10}
+                      onChange={(e) =>
+                        setIspProxyInput({
+                          ...ispProxyInput,
+                          length: LENGTHOFSUBSCRIPTION[e],
+                        })
+                      }
+                      value={SHOWSUBSCRIPTION[ispProxyInput.length]}
+                      marks={renderDCPSliderMarks()}
+                      activeDotStyle={{
+                        borderColor: "#fff",
+                        backgroundColor: "#07b6bf",
+                      }}
+                      trackStyle={{
+                        backgroundColor: "#07b6bf",
+                        height: 6,
+                      }}
+                      railStyle={{
+                        height: 6,
+                      }}
+                      dotStyle={{
+                        height: 4,
+                        width: 4,
+                        bottom: "-2px",
+                        display: "none",
+                      }}
+                      handleStyle={{
+                        borderColor: "#07b6bf",
+                        backgroundColor: "#07b6bf",
+                        opacity: 1,
                       }}
                     />
                   </div>
