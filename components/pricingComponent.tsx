@@ -153,10 +153,12 @@ const PricingComponent = ({
   const isMobile = useMediaQuery({ maxWidth: 767 });
 
   const [selectedTab, setSelectedTab] = useState(pricingTabs.DataCenterProxies);
+  const [resedentialInput, setResidentialInput] = useState(1);
   const [resedentialProxyCalculated, setresedentialProxyCalculated] = useState<
     any | 0
-  >(0);
-  const [resedentialInput, setResidentialInput] = useState(5);
+  >(calculateResedentialProxy(Number(resedentialInput)));
+
+  console.log({ resedentialProxyCalculated });
   const [ispProxyInput, setIspProxyInput] = useState({
     country: "us",
     mainType: "dedicated",
@@ -404,7 +406,7 @@ const PricingComponent = ({
                       selectedTab == pricingTabs.DataCenterProxies && "active"
                     }`}
                     onClick={() => {
-                      setresedentialProxyCalculated("");
+                      // setresedentialProxyCalculated("");
                       setSelectedTab(pricingTabs.DataCenterProxies);
                     }}
                   >
@@ -415,7 +417,7 @@ const PricingComponent = ({
                       selectedTab == pricingTabs.ResidentialProxies && "active"
                     }`}
                     onClick={() => {
-                      setresedentialProxyCalculated("");
+                      // setresedentialProxyCalculated("");
 
                       setSelectedTab(pricingTabs.ResidentialProxies);
                     }}
@@ -427,7 +429,7 @@ const PricingComponent = ({
                       selectedTab == pricingTabs.ISPProxies && "active"
                     }`}
                     onClick={() => {
-                      setresedentialProxyCalculated("");
+                      // setresedentialProxyCalculated("");
                       setSelectedTab(pricingTabs.ISPProxies);
                     }}
                   >
@@ -640,16 +642,16 @@ const PricingComponent = ({
                   <div className="content-box">
                     <input
                       className={`proxy-input ${
-                        resedentialInput < 5 && "border-red"
+                        resedentialInput < 1 && "border-red"
                       }`}
                       placeholder=""
                       value={resedentialInput}
                       onChange={handleChangeResidentialProxies}
                     />
                     <br />
-                    {resedentialInput < 5 && (
+                    {resedentialInput < 1 && (
                       <span className="validation-error">
-                        Minimum 5 proxies required
+                        Minimum 1 proxy required
                       </span>
                     )}
 
@@ -858,6 +860,7 @@ const PricingComponent = ({
                     <h1>
                       <sup>$</sup>
                       {selectedTab == pricingTabs.ResidentialProxies &&
+                        // Number(resedentialProxyCalculated).toFixed(2)
                         resedentialProxyCalculated}
                       {selectedTab == pricingTabs.ISPProxies &&
                         Number(ispCalculatedValue).toFixed(2)}
@@ -866,55 +869,64 @@ const PricingComponent = ({
                         Number(dspCalculatedValue).toFixed(2)}
                     </h1>
                     <hr />
-                    <div className="chart-sub-content">
-                      <div className="col-1">
-                        <p>
-                          {selectedTab == pricingTabs.ResidentialProxies && (
-                            <>
-                              {" "}
-                              $
-                              {resedentialProxyCalculated
-                                ? resedentialProxyCalculated /
-                                  Number(resedentialInput)
-                                : "-"}
-                              /GB
-                            </>
-                          )}
-                          {selectedTab == pricingTabs.ISPProxies && (
-                            <>
-                              {" "}
-                              $
-                              {ispCalculatedValue
-                                ? Number(
-                                    ispCalculatedValue /
-                                      (Number(ispProxyValue) *
-                                        MONTHVALUE[ispProxyInput.length])
-                                  ).toFixed(2)
-                                : "-"}
-                              /IP
-                            </>
-                          )}
-                          {selectedTab == pricingTabs.DataCenterProxies && (
-                            <>
-                              {typeof dspCalculatedValue === "number" &&
-                              dspCalculatedValue
-                                ? Number(
-                                    dspCalculatedValue /
-                                      (Number(dspValue) * MONTHVALUE[dspMonths])
-                                  ).toFixed(2)
-                                : "--"}
-                              /IP
-                            </>
-                          )}
-                        </p>
-                        <p>{dspValue} IPs</p>
+                    {selectedTab === pricingTabs.ResidentialProxies ? (
+                      <div>
+                        <p>{resedentialInput} GB</p>
                       </div>
-                      <div className="col-2">
-                        <p className="radio-label">{dspRadio}</p>
-                        <p>{renderMonthsForChart()} </p>
+                    ) : (
+                      <div className="chart-sub-content">
+                        <div className="col-1">
+                          <p>
+                            {selectedTab == pricingTabs.ResidentialProxies && (
+                              <>
+                                {" "}
+                                $
+                                {resedentialProxyCalculated
+                                  ? resedentialProxyCalculated /
+                                    Number(resedentialInput)
+                                  : "-"}
+                                /GB
+                              </>
+                            )}
+                            {selectedTab == pricingTabs.ISPProxies && (
+                              <>
+                                {" "}
+                                $
+                                {ispCalculatedValue
+                                  ? Number(
+                                      ispCalculatedValue /
+                                        (Number(ispProxyValue) *
+                                          MONTHVALUE[ispProxyInput.length])
+                                    ).toFixed(2)
+                                  : "-"}
+                                /IP
+                              </>
+                            )}
+                            {selectedTab == pricingTabs.DataCenterProxies && (
+                              <>
+                                {typeof dspCalculatedValue === "number" &&
+                                dspCalculatedValue
+                                  ? Number(
+                                      dspCalculatedValue /
+                                        (Number(dspValue) *
+                                          MONTHVALUE[dspMonths])
+                                    ).toFixed(2)
+                                  : "--"}
+                                /IP
+                              </>
+                            )}
+                          </p>
+                          <p>{dspValue} IPs</p>
+                        </div>
+                        <div className="col-2">
+                          <p className="radio-label">{dspRadio}</p>
+                          <p>{renderMonthsForChart()} </p>
+                        </div>
                       </div>
-                    </div>
-                    <p className="country-name">{dcpCountry}</p>
+                    )}
+                    {selectedTab !== pricingTabs.ResidentialProxies && (
+                      <p className="country-name">{dcpCountry}</p>
+                    )}
                   </div>
                   <ReactApexChart
                     className="apex-chart"
