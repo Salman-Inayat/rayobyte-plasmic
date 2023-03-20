@@ -121,7 +121,11 @@ let chartOptions: any = {
 };
 
 const renderDCPSliderMarks = () => {
-  const marks = {};
+  const marks: {
+    [key: string]: {
+      label: JSX.Element;
+    };
+  } = {};
 
   for (const [value, months] of Object.entries(rangePoints)) {
     const discount = DISCOUNTS[value];
@@ -129,7 +133,7 @@ const renderDCPSliderMarks = () => {
       label: (
         <div className="mark-label">
           <div className="duration">
-            <p>{months}</p>
+            <p>{months as string}</p>
             <p>{months === 1 ? "MONTH" : "MONTHS"}</p>
           </div>
           {value !== "10" && <span className="discount">{discount} %</span>}
@@ -539,7 +543,7 @@ const PricingComponent = ({
                       min={10}
                       max={40}
                       step={10}
-                      onChange={(e) => {
+                      onChange={(e: any) => {
                         setDspMonths(LENGTHOFSUBSCRIPTION[e]);
                       }}
                       value={SHOWSUBSCRIPTION[dspMonths]}
@@ -769,7 +773,7 @@ const PricingComponent = ({
                       min={10}
                       max={40}
                       step={10}
-                      onChange={(e) =>
+                      onChange={(e: any) =>
                         setIspProxyInput({
                           ...ispProxyInput,
                           length: LENGTHOFSUBSCRIPTION[e],
