@@ -675,7 +675,7 @@ const PricingComponent = ({
 
                 <div className="no-of-proxies two-cols">
                   <div className="lable-box">
-                    <label>Number of Proxies:</label>
+                    <label>Gigabytes:</label>
                   </div>
                   <div className="content-box">
                     <input
