@@ -14,7 +14,7 @@ const activeClass = {
 
 type ISPProxies = {
   us: any;
-  uk: any;
+  gb: any;
   ca: any;
   de: any;
 };
@@ -572,7 +572,7 @@ const ispProxy: ISPProxies = {
       corporate: 0.08,
     },
   },
-  uk: {
+  gb: {
     dedicated: {
       price: 5,
       oneMonthDisc: 5,

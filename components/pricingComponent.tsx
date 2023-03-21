@@ -77,7 +77,7 @@ let chartOptions: any = {
     type: "radialBar",
   },
 
-  series: [67],
+  // series: [67],
   plotOptions: {
     radialBar: {
       hollow: {
@@ -158,11 +158,10 @@ const PricingComponent = ({
     any | 0
   >(calculateResedentialProxy(Number(resedentialInput)));
 
-  console.log({ resedentialProxyCalculated });
   const [ispProxyInput, setIspProxyInput] = useState({
     country: "us",
     mainType: "dedicated",
-    length: "oneMonthDisc",
+    length: "threeMonthDisc",
     proxyType: "starterDisc",
   });
 
@@ -170,7 +169,7 @@ const PricingComponent = ({
   const [ispCalculatedValue, setIspCalculatedValue] = useState<any | 0>(0);
 
   const [item, setItem] = useState(0);
-  const [countries, setCountries] = useState(["US", "UK", "DE", "CA"]);
+  const [countries, setCountries] = useState(["US", "GB", "DE", "CA"]);
   const [countriesDataCenterProxy, setCountriesDataCenterProxy] = useState([
     "US",
     "GB",
@@ -220,6 +219,7 @@ const PricingComponent = ({
   ];
 
   const onCountrySelect = (code: string): void => {
+    console.log({ code });
     setIspProxyInput({ ...ispProxyInput, country: code.toLowerCase() });
     setSelected(code);
   };
@@ -324,6 +324,7 @@ const PricingComponent = ({
   useEffect(() => {
     let finalValue = 0;
     let discount = 0;
+    console.log({ ispProxyInput });
     const baseValue =
       ispProxyValue *
       ispProxy[ispProxyInput.country as keyof typeof ispProxy][
@@ -366,6 +367,7 @@ const PricingComponent = ({
 
   const handleDspRadioChange = (e: any) => {
     setDspRadio(e);
+    console.log({ e });
   };
 
   const renderMonthsForChart = () => {
@@ -381,6 +383,40 @@ const PricingComponent = ({
     if (dspMonths === "twelveMonthDisc") {
       return "12 months";
     }
+  };
+
+  const renderDCPChartValue = () => {
+    if (dspMonths === "oneMonthDisc") {
+      return 25;
+    }
+    if (dspMonths === "threeMonthDisc") {
+      return 50;
+    }
+    if (dspMonths === "sixMonthDisc") {
+      return 75;
+    }
+    if (dspMonths === "twelveMonthDisc") {
+      return 100;
+    }
+
+    return 0;
+  };
+
+  const renderISPProxiesChartValue = () => {
+    if (ispProxyInput.length === "oneMonthDisc") {
+      return 25;
+    }
+    if (ispProxyInput.length === "threeMonthDisc") {
+      return 50;
+    }
+    if (ispProxyInput.length === "sixMonthDisc") {
+      return 75;
+    }
+    if (ispProxyInput.length === "twelveMonthDisc") {
+      return 100;
+    }
+
+    return 0;
   };
 
   return (
@@ -547,6 +583,8 @@ const PricingComponent = ({
                       step={10}
                       onChange={(e: any) => {
                         setDspMonths(LENGTHOFSUBSCRIPTION[e]);
+
+                        console.log({ months: LENGTHOFSUBSCRIPTION[e] });
                       }}
                       value={SHOWSUBSCRIPTION[dspMonths]}
                       marks={renderDCPSliderMarks()}
@@ -657,10 +695,30 @@ const PricingComponent = ({
 
                     <div className="stats">
                       <span className="stat-item">
-                        <b>Starter:</b> <i>5 to 99</i>{" "}
-                        <span className="discount-value">-15%</span>
+                        <b>Starter:</b> <i>1 - 15 GB</i>{" "}
                       </span>
                       <span className="stat-item">
+                        <b>Personal:</b> <i>16 - 49 GB</i>{" "}
+                      </span>
+                      <span className="stat-item">
+                        <b>Consumer:</b> <i>50 - 99 GB</i>{" "}
+                      </span>
+                      <span className="stat-item">
+                        <b>Professional:</b> <i>100 - 249 GB</i>{" "}
+                      </span>
+                      <span className="stat-item">
+                        <b>Business:</b> <i>250 - 499 GB</i>{" "}
+                      </span>
+                      <span className="stat-item">
+                        <b>Corporate:</b> <i>500 - 999 GB</i>{" "}
+                      </span>
+                      <span className="stat-item">
+                        <b>Enterprise:</b> <i>1 - 4.9 TB</i>{" "}
+                      </span>
+                      <span className="stat-item">
+                        <b>Custom:</b> <i>5TB +</i>{" "}
+                      </span>
+                      {/* <span className="stat-item">
                         <b>Personal-</b> <i>5 to 99</i>{" "}
                         <span className="discount-value">-15%</span>
                       </span>
@@ -671,7 +729,7 @@ const PricingComponent = ({
                       <span className="stat-item">
                         <b>Enterprise:</b> <i>5 to 99</i>{" "}
                         <span className="discount-value">-15%</span>
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -775,12 +833,13 @@ const PricingComponent = ({
                       min={10}
                       max={40}
                       step={10}
-                      onChange={(e: any) =>
+                      onChange={(e: any) => {
                         setIspProxyInput({
                           ...ispProxyInput,
                           length: LENGTHOFSUBSCRIPTION[e],
-                        })
-                      }
+                        });
+                        console.log({ length: LENGTHOFSUBSCRIPTION[e] });
+                      }}
                       value={SHOWSUBSCRIPTION[ispProxyInput.length]}
                       marks={renderDCPSliderMarks()}
                       activeDotStyle={{
@@ -832,19 +891,18 @@ const PricingComponent = ({
                     <div className="stats">
                       <span className="stat-item">
                         <b>Starter:</b> <i>5 to 99</i>{" "}
+                      </span>
+                      <span className="stat-item">
+                        <b>Personal:</b> <i>100 to 999</i>{" "}
                         <span className="discount-value">-15%</span>
                       </span>
                       <span className="stat-item">
-                        <b>Personal:</b> <i>5 to 99</i>{" "}
-                        <span className="discount-value">-15%</span>
+                        <b>Corporate:</b> <i>1k to 4,999</i>{" "}
+                        <span className="discount-value">-25%</span>
                       </span>
                       <span className="stat-item">
-                        <b>Corporate:</b> <i>5 to 99</i>{" "}
-                        <span className="discount-value">-15%</span>
-                      </span>
-                      <span className="stat-item">
-                        <b>Enterprise:</b> <i>5 to 99</i>{" "}
-                        <span className="discount-value">-15%</span>
+                        <b>Enterprise:</b> <i>5k+</i>{" "}
+                        <span className="discount-value">-30%</span>
                       </span>
                     </div>
                   </div>
@@ -925,7 +983,11 @@ const PricingComponent = ({
                       </div>
                     )}
                     {selectedTab !== pricingTabs.ResidentialProxies && (
-                      <p className="country-name">{dcpCountry}</p>
+                      <p className="country-name">
+                        {selectedTab == pricingTabs.DataCenterProxies
+                          ? dcpCountry
+                          : ispProxyInput.country}
+                      </p>
                     )}
                   </div>
                   <ReactApexChart
@@ -936,8 +998,8 @@ const PricingComponent = ({
                       selectedTab == pricingTabs.ResidentialProxies
                         ? resedentialProxyCalculated * 0.1
                         : selectedTab == pricingTabs.ISPProxies
-                        ? ispCalculatedValue * 0.1
-                        : dspCalculatedValue * 0.1,
+                        ? renderISPProxiesChartValue()
+                        : renderDCPChartValue(),
                     ]}
                     type="radialBar"
                   />
@@ -954,12 +1016,15 @@ const PricingComponent = ({
           </div>
         </div>
 
-        {/* <div className="price_info">
-            * If you purchase multiple proxy packages, the total number of IPs may
-            be eligible for custom discounts. For additional information, please
-            email{' '}
-            <a href="mailto:sales@dev2.rayobyte.com">sales@dev2.rayobyte.com</a>.*
-          </div> */}
+        <div className="price_info">
+          <p>
+            * If you purchase multiple proxy packages, the total number of IPs
+            may be eligible for custom discounts. For additional information,
+            please email{" "}
+            <a href="mailto:sales@dev2.rayobyte.com">sales@dev2.rayobyte.com</a>
+            .*
+          </p>
+        </div>
       </div>
     </section>
   );
