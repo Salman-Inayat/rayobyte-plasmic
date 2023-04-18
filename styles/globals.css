@@ -289,6 +289,8 @@ label {
 .pricing-row {
   display: grid;
   grid-template-columns: 1.6fr 1fr;
+
+  margin-bottom: 10rem;
   /* gap: 50px; */
 }
 
@@ -554,6 +556,10 @@ label {
   margin-top: 55px;
 }
 
+.no-of-proxies.residential-gbs {
+  margin-top: 0px;
+}
+
 .no-of-proxies .content-box .proxy-input {
   width: 89px;
   border: 1px solid #d0d0d0;
@@ -635,6 +641,7 @@ label {
 
 .right-col {
   position: relative;
+  min-height: 500px;
 }
 .chart-wrapper {
   position: absolute;
@@ -653,7 +660,8 @@ label {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
+  width: 70%;
+  z-index: 100000;
 }
 
 .chart-wrapper .chart-content * {
@@ -728,8 +736,16 @@ label {
   order: -1;
 }
 
+.chart-wrapper .chart-content .chart-sub-content .col-1 p {
+  text-align: end;
+}
+
 .chart-wrapper .chart-content .chart-sub-content .col-2 {
   flex: 1;
+}
+
+.chart-wrapper .chart-content .chart-sub-content .col-2 p {
+  text-align: start;
 }
 
 .chart-wrapper .chart-content .chart-sub-content .col-2 .radio-label {
@@ -739,12 +755,52 @@ label {
 
 .chart-wrapper .chart-content .country-name {
   text-transform: uppercase;
-  font-weight: 500;
-  font-size: 20px;
-  margin-top: 1rem;
+}
+
+.contact-us {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.contact-us-text {
+  font-weight: 500 !important;
+  width: 80%;
+}
+
+.contact-us-btn {
+  padding: auto 0px;
+  width: 150px;
+  height: 40px;
+  background: #07b6bf;
+  font-family: var(--font-family-inter);
+  border: 2px solid #07b6bf;
+  border-radius: 4px;
+  text-align: center;
+  color: #fff !important;
+  font-weight: 600;
+  font-size: 15px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
 }
 
 @media screen and (max-width: 991.99px) {
+  .pricing-row {
+    margin-bottom: 4rem;
+  }
+
+  /* .no-of-proxies {
+    margin-top: 0px;
+  } */
+
   .chart-wrapper {
     position: unset;
     width: 100%;
@@ -752,9 +808,37 @@ label {
     height: auto;
     margin-inline: auto;
   }
+
+  .right-col {
+    min-height: 400px;
+  }
+
+  .price_info p {
+    width: 80%;
+  }
+
+  .chart-wrapper .chart-content {
+    top: 45%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .contact-us {
+    width: 60%;
+  }
+
+  .contact-us-text {
+    font-size: 1.2rem !important;
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 599.99px) {
+  .pricing-row {
+    margin-bottom: 6rem;
+  }
   .pricing-header {
     padding: 54px 0px 61px;
   }
@@ -773,8 +857,12 @@ label {
     gap: 0;
   }
 
-  .left-col {
-    margin-bottom: 3rem;
+  /* .no-of-proxies {
+    margin-top: 0px;
+  } */
+
+  .right-col {
+    min-height: 400px;
   }
 
   .pricing-row {
@@ -792,10 +880,27 @@ label {
 
   .chart-wrapper {
     max-width: 100%;
+    min-height: 60%;
   }
 
   .apex-chart {
     transform: scale(1.3);
+  }
+
+  .chart-wrapper .chart-content {
+    top: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .chart-wrapper .chart-content .contact-us {
+    margin-top: 3rem;
+    width: 80%;
+  }
+
+  .chart-wrapper .chart-content .contact-us .contact-us-text {
+    font-size: 14px;
   }
 
   .chart-wrapper .chart-content h1 {
@@ -821,6 +926,15 @@ label {
     text-align: center;
     width: 85%;
     margin: 0 auto;
+  }
+
+  .contact-us-btn {
+    gap: 0.5rem;
+    width: 80%;
+  }
+
+  .contact-us-text {
+    font-size: 0.8rem !important;
   }
 }
 

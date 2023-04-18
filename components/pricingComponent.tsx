@@ -73,7 +73,7 @@ const SHOWSUBSCRIPTION = {
 
 let chartOptions: any = {
   chart: {
-    height: 300,
+    height: 600,
     type: "radialBar",
   },
 
@@ -151,6 +151,7 @@ const PricingComponent = ({
   verbose,
 }: HelloWorldProps) => {
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1023 });
 
   const [selectedTab, setSelectedTab] = useState(pricingTabs.DataCenterProxies);
   const [resedentialInput, setResidentialInput] = useState(1);
@@ -210,6 +211,8 @@ const PricingComponent = ({
   const [dspValue, setDspValue] = useState(5);
   const [dspPackage, setDspPackage] = useState<any | "">("starterDisc");
   const [dspCalculatedValue, setDspCalculatedValue] = useState<any | 0>(0);
+
+  const [showContact, setShowContact] = useState(false);
 
   const range = [
     { value: 1, step: 10 },
@@ -315,8 +318,6 @@ const PricingComponent = ({
       setIspProxyInput({ ...ispProxyInput, proxyType: "personalDisc" });
     } else if (e.target.value >= 1000 && e.target.value <= 4999) {
       setIspProxyInput({ ...ispProxyInput, proxyType: "corporate" });
-    } else if (e.target.value >= 5000) {
-      return;
     }
     setIspProxyValue(e.target.value);
   };
@@ -349,19 +350,20 @@ const PricingComponent = ({
   }, [ispProxyInput, ispProxyValue]);
 
   const handleDspInputChange = ({ target }: any) => {
-    if (target.value >= 5 && target.value <= 99) {
+    const value = target.value;
+
+    if (value >= 5 && value <= 99) {
       setDspPackage("starterDisc");
-    } else if (target.value >= 100 && target.value <= 999) {
+    } else if (value >= 100 && value <= 999) {
       setDspPackage("personalDisc");
-    } else if (target.value >= 1000 && target.value <= 4999) {
+    } else if (value >= 1000 && value <= 4999) {
       setDspPackage("corporate");
-    } else if (target.value >= 5000) {
-      return;
     }
+
     // if (target.value >= 5) {
     //   setDspValue(target.value);
     // } else {
-    setDspValue(target.value);
+    setDspValue(value);
     // }
   };
 
@@ -419,6 +421,26 @@ const PricingComponent = ({
     return 0;
   };
 
+  const getPerMonthValue = (tab: string) => {
+    if (tab === "isp") {
+      return Number(
+        (
+          Number(ispCalculatedValue) / Number(MONTHVALUE[ispProxyInput.length])
+        ).toFixed(2)
+      );
+    }
+
+    if (tab === "dataCenter") {
+      return Number(
+        (Number(dspCalculatedValue) / Number(MONTHVALUE[dspMonths])).toFixed(2)
+      );
+    }
+
+    return 0;
+  };
+
+  console.log({ dspValue, ispProxyValue, resedentialInput });
+
   return (
     <section className={`pricing-header ${className}`}>
       <div className="section-container">
@@ -444,6 +466,7 @@ const PricingComponent = ({
                     onClick={() => {
                       // setresedentialProxyCalculated("");
                       setSelectedTab(pricingTabs.DataCenterProxies);
+                      setShowContact(false);
                     }}
                   >
                     Data Center Proxies
@@ -456,6 +479,7 @@ const PricingComponent = ({
                       // setresedentialProxyCalculated("");
 
                       setSelectedTab(pricingTabs.ResidentialProxies);
+                      setShowContact(false);
                     }}
                   >
                     Residential Proxies
@@ -467,6 +491,7 @@ const PricingComponent = ({
                     onClick={() => {
                       // setresedentialProxyCalculated("");
                       setSelectedTab(pricingTabs.ISPProxies);
+                      setShowContact(false);
                     }}
                   >
                     ISP Proxies
@@ -532,51 +557,6 @@ const PricingComponent = ({
                     <label>Length of Subscription:</label>
                   </div>
                   <div className="price-slider">
-                    {/* <Slider
-                      className="price-slider-main"
-                      min={10}
-                      step={10}
-                      max={40}
-                      value={SHOWSUBSCRIPTION[dspMonths]}
-                      graduated
-                      progress
-                      // tooltip={false}
-                      onChange={(e) => {
-                        setDspMonths(LENGTHOFSUBSCRIPTION[e]);
-                      }}
-                      renderMark={(mark) => {
-                        if ([10, 20, 30, 40].includes(mark)) {
-                          return (
-                            <>
-                              <span className="duration">
-                                {rangePoints[mark]}
-                                <br />{" "}
-                                {rangePoints[mark] === 1 ? "MONTH" : "MONTHS"}
-                              </span>
-                              {mark !== 10 && (
-                                <span className="discount">
-                                  {DISCOUNTS[mark]} %
-                                </span>
-                              )}
-                            </>
-                            // <div>
-                            //   <span className="duration">
-                            //     {rangePoints[mark]}
-                            //     <br />{" "}
-                            //     {rangePoints[mark] === 1 ? "MONTH" : "MONTHS"}
-                            //   </span>
-                            //   {mark !== 10 && (
-                            //     <span className="discount">
-                            //       {DISCOUNTS[mark]} %
-                            //     </span>
-                            //   )}
-                            // </div>
-                          );
-                        }
-                        return null;
-                      }}
-                    /> */}
-
                     <Slider
                       min={10}
                       max={40}
@@ -622,9 +602,11 @@ const PricingComponent = ({
                     <input
                       className={`proxy-input ${dspValue < 5 && "border-red"}`}
                       placeholder=""
+                      type="number"
                       defaultValue={5}
                       value={dspValue}
                       onChange={handleDspInputChange}
+                      max={9999}
                     />
                     <br />
                     {dspValue < 5 && (
@@ -636,7 +618,6 @@ const PricingComponent = ({
                     <div className="stats">
                       <span className="stat-item">
                         <b>Starter:</b> <i>5 to 99</i>{" "}
-                        {/* <span className="discount-value">-15%</span> */}
                       </span>
                       <span className="stat-item">
                         <b>Personal:</b> <i>100 to 999</i>{" "}
@@ -673,7 +654,7 @@ const PricingComponent = ({
                   </div>
                 </div>
 
-                <div className="no-of-proxies two-cols">
+                <div className="no-of-proxies residential-gbs two-cols">
                   <div className="lable-box">
                     <label>Gigabytes:</label>
                   </div>
@@ -685,6 +666,8 @@ const PricingComponent = ({
                       placeholder=""
                       value={resedentialInput}
                       onChange={handleChangeResidentialProxies}
+                      type="number"
+                      max={1000}
                     />
                     <br />
                     {resedentialInput < 1 && (
@@ -793,42 +776,6 @@ const PricingComponent = ({
                     <label>Length of Subscription:</label>
                   </div>
                   <div className="price-slider">
-                    {/* <Slider
-                      defaultValue={10}
-                      min={10}
-                      step={10}
-                      max={40}
-                      value={SHOWSUBSCRIPTION[ispProxyInput.length]}
-                      onChange={(e) =>
-                        setIspProxyInput({
-                          ...ispProxyInput,
-                          length: LENGTHOFSUBSCRIPTION[e],
-                        })
-                      }
-                      graduated
-                      progress
-                      // tooltip={false}
-                      renderMark={(mark) => {
-                        if ([10, 20, 30, 40].includes(mark)) {
-                          console.log({ mark });
-                          return (
-                            <div>
-                              <span className="duration">
-                                {rangePoints[mark]}
-                                <br />
-                                {rangePoints[mark] === 1 ? "MONTH" : "MONTHS"}
-                              </span>
-                              {mark !== 10 && (
-                                <span className="discount">
-                                  {DISCOUNTS[mark]} %
-                                </span>
-                              )}
-                            </div>
-                          );
-                        }
-                        return null;
-                      }}
-                    /> */}
                     <Slider
                       min={10}
                       max={40}
@@ -880,6 +827,7 @@ const PricingComponent = ({
                       onChange={handleIspProxyInputChange}
                       value={ispProxyValue}
                       placeholder=""
+                      type="number"
                     />
                     <br />
                     <span className="validation-error">
@@ -912,14 +860,41 @@ const PricingComponent = ({
           </div>
           <div className="right-col">
             <div className="chart-wrapper">
-              {window !== undefined && (
-                <div id="chart">
-                  <div className="chart-content">
+              <div className="chart-content">
+                {(selectedTab == pricingTabs.DataCenterProxies &&
+                  dspValue > 5000) ||
+                (selectedTab == pricingTabs.ISPProxies &&
+                  ispProxyValue > 5000) ||
+                (selectedTab == pricingTabs.ResidentialProxies &&
+                  resedentialInput > 5000) ? (
+                  <div className="contact-us">
+                    <p className="contact-us-text">
+                      Get a custom plan for your business and save upto{" "}
+                      <em>
+                        <strong>30%</strong>
+                      </em>{" "}
+                      or more on orders of{" "}
+                      <em>
+                        <strong>5000+</strong>
+                      </em>{" "}
+                      {selectedTab == pricingTabs.ResidentialProxies
+                        ? "GBs."
+                        : "proxies."}
+                    </p>
+                    <a
+                      href="https://rayobyte.com/contact-us/"
+                      className="contact-us-btn"
+                      target="_blank"
+                    >
+                      Contact Us
+                    </a>
+                  </div>
+                ) : (
+                  <>
                     <h1>
                       <sup>$</sup>
                       {selectedTab == pricingTabs.ResidentialProxies &&
-                        // Number(resedentialProxyCalculated).toFixed(2)
-                        resedentialProxyCalculated}
+                        Number(resedentialProxyCalculated).toFixed(2)}
                       {selectedTab == pricingTabs.ISPProxies &&
                         Number(ispCalculatedValue).toFixed(2)}
 
@@ -975,24 +950,45 @@ const PricingComponent = ({
                             )}
                           </p>
                           <p>{dspValue} IPs</p>
+                          <p>
+                            $
+                            {getPerMonthValue(
+                              selectedTab === pricingTabs.DataCenterProxies
+                                ? "dataCenter"
+                                : selectedTab === pricingTabs.ISPProxies
+                                ? "isp"
+                                : "dataCenter"
+                            )}
+                            /Mo
+                          </p>
                         </div>
                         <div className="col-2">
-                          <p className="radio-label">{dspRadio}</p>
+                          <p className="radio-label">
+                            {selectedTab == pricingTabs.DataCenterProxies
+                              ? dspRadio
+                              : selectedTab == pricingTabs.ISPProxies
+                              ? ispProxyInput.mainType
+                              : ispProxyInput.mainType}
+                          </p>
                           <p>{renderMonthsForChart()} </p>
+                          {selectedTab !== pricingTabs.ResidentialProxies && (
+                            <p className="country-name">
+                              {selectedTab == pricingTabs.DataCenterProxies
+                                ? dcpCountry
+                                : ispProxyInput.country}
+                            </p>
+                          )}
                         </div>
                       </div>
                     )}
-                    {selectedTab !== pricingTabs.ResidentialProxies && (
-                      <p className="country-name">
-                        {selectedTab == pricingTabs.DataCenterProxies
-                          ? dcpCountry
-                          : ispProxyInput.country}
-                      </p>
-                    )}
-                  </div>
+                  </>
+                )}
+              </div>
+              {window !== undefined && (
+                <div id="chart">
                   <ReactApexChart
-                    className="apex-chart"
-                    width={isMobile ? "400" : "500"}
+                    width={isMobile ? 380 : isTablet ? 600 : 500}
+                    height={isMobile ? 380 : isTablet ? 600 : 500}
                     options={chartOptions}
                     series={[
                       selectedTab == pricingTabs.ResidentialProxies
@@ -1005,13 +1001,20 @@ const PricingComponent = ({
                   />
                 </div>
               )}
-              <a
-                href="https://dashboard.proxy.rayobyte.com/purchase?country=us&quantity=5&billingCycle=quarterly&_gl=1*116hez4*_ga*NzExNzM2NzMxLjE2NzYzMTA5NzQ.*_ga_TK61YTK3F7*MTY3NzUwNzk2Ni4yNS4xLjE2Nzc1MDg2MjQuNTYuMC4w"
-                target="_blank"
-                className="btn-primary-outline-hover"
-              >
-                Buy Now
-              </a>
+              {((selectedTab == pricingTabs.DataCenterProxies &&
+                dspValue <= 5000) ||
+                (selectedTab == pricingTabs.ISPProxies &&
+                  ispProxyValue <= 5000) ||
+                (selectedTab == pricingTabs.ResidentialProxies &&
+                  resedentialInput <= 5000)) && (
+                <a
+                  href="https://dashboard.proxy.rayobyte.com/purchase?country=us&quantity=5&billingCycle=quarterly&_gl=1*116hez4*_ga*NzExNzM2NzMxLjE2NzYzMTA5NzQ.*_ga_TK61YTK3F7*MTY3NzUwNzk2Ni4yNS4xLjE2Nzc1MDg2MjQuNTYuMC4w"
+                  target="_blank"
+                  className="btn-primary-outline-hover"
+                >
+                  Buy Now
+                </a>
+              )}
             </div>
           </div>
         </div>
