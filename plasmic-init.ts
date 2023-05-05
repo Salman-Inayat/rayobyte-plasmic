@@ -6,14 +6,9 @@ import TestimonialCarousel from "./components/testimonialCarousel";
 export const PLASMIC = initPlasmicLoader({
   projects: [
     {
-      // id: "8VtBq1uAF8x37koERPKh2w",
-      // token: "7prlbmGvH364QS3dmQ94jLoCcW3tBOBSI9Dk1MLgNVeOiTgFG9ZL475o2s6kk9m1c2EHfYU6WByNkFAJqJg",
-      // id: "aLmnRmimxnTz9jYhsdVbG1", // ID of a project you are using
-      // token:
-      //   "wg1sMNsklxuyTOfSHWSH1U7k4ul5dC40RuWgaVazEaEJklKjCgEclezGMCz4GVpt6Qa83dxDMSMzG4rsR4RQ", // API token for that project
-      id: "c7Q9C99zZ4cHRwZsjCNjsu", // ID of a project you are using
+      id: "aLmnRmimxnTz9jYhsdVbG1", // ID of a project you are using
       token:
-        "Fa2VoR6g7DdSWWbhdUz3SMBWVBKwW4oLlTZzL2WV1LCoiu2RCQpM6Jm9ltGikdCjUKKkdfN53gGOrJudg", // API token for that project
+        "wg1sMNsklxuyTOfSHWSH1U7k4ul5dC40RuWgaVazEaEJklKjCgEclezGMCz4GVpt6Qa83dxDMSMzG4rsR4RQ", // API token for that project
     },
   ],
 
@@ -26,14 +21,6 @@ export const PLASMIC = initPlasmicLoader({
 
 PLASMIC.registerComponent(PricingCodeComponent, {
   name: "Pricing Code Component",
-  props: {
-    verbose: "boolean",
-    children: "slot",
-  },
-});
-
-PLASMIC.registerComponent(TestimonialCarousel, {
-  name: "Testimonial Carousel",
   props: {
     verbose: "boolean",
     children: "slot",

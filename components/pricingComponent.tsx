@@ -444,13 +444,13 @@ const PricingComponent = ({
   return (
     <section className={`pricing-header ${className}`}>
       <div className="section-container">
-        <h1 className="section-header">Pricing</h1>
+        {/* <h1 className="section-header">Pricing</h1> */}
 
-        <p className="section-header-desc">
+        {/* <p className="section-header-desc">
           Simply choose the product you want to calculate for, make your
           selections and we’ll show you how much it’ll cost on the right. It’s
           that easy!
-        </p>
+        </p> */}
         <div className="pricing-row">
           <div className="left-col">
             <div className="proxy-types two-cols">
@@ -1019,7 +1019,7 @@ const PricingComponent = ({
           </div>
         </div>
 
-        <div className="price_info">
+        {/* <div className="price_info">
           <p>
             * If you purchase multiple proxy packages, the total number of IPs
             may be eligible for custom discounts. For additional information,
@@ -1027,7 +1027,7 @@ const PricingComponent = ({
             <a href="mailto:sales@dev2.rayobyte.com">sales@dev2.rayobyte.com</a>
             .*
           </p>
-        </div>
+        </div> */}
       </div>
     </section>
   );

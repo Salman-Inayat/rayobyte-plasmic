@@ -239,7 +239,7 @@ label {
   display: block;
 }
 
-.pricing-header {
+/* .pricing-header {
   background: #282828;
   background-image: radial-gradient(
     50.31% 82.33% at 68.26% 77.78%,
@@ -248,7 +248,7 @@ label {
   );
   padding: 54px 0px 61px;
   width: "100%";
-}
+} */
 
 .section-header {
   margin-bottom: 25px;
@@ -840,7 +840,7 @@ label {
     margin-bottom: 6rem;
   }
   .pricing-header {
-    padding: 54px 0px 61px;
+    padding: 0px;
   }
 
   .section-container {
