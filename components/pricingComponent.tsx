@@ -842,15 +842,15 @@ const PricingComponent = ({
                       </span>
                       <span className="stat-item">
                         <b>Personal:</b> <i>100 to 999</i>{" "}
-                        <span className="discount-value">-15%</span>
+                        <span className="discount-value">-4%</span>
                       </span>
                       <span className="stat-item">
                         <b>Corporate:</b> <i>1k to 4,999</i>{" "}
-                        <span className="discount-value">-25%</span>
+                        <span className="discount-value">-8%</span>
                       </span>
                       <span className="stat-item">
                         <b>Enterprise:</b> <i>5k+</i>{" "}
-                        <span className="discount-value">-30%</span>
+                        <span className="discount-value">-12%</span>
                       </span>
                     </div>
                   </div>

@@ -290,7 +290,7 @@ label {
   display: grid;
   grid-template-columns: 1.6fr 1fr;
 
-  margin-bottom: 10rem;
+  margin-bottom: 4rem;
   /* gap: 50px; */
 }
 
@@ -794,7 +794,7 @@ label {
 
 @media screen and (max-width: 991.99px) {
   .pricing-row {
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
   }
 
   /* .no-of-proxies {
@@ -837,7 +837,7 @@ label {
 
 @media screen and (max-width: 599.99px) {
   .pricing-row {
-    margin-bottom: 6rem;
+    margin-bottom: 1rem;
   }
   .pricing-header {
     padding: 0px;
